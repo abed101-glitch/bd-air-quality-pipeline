@@ -1,5 +1,7 @@
 # Bangladesh Air-Quality ELT Pipeline
 
+[![ci](https://github.com/abed101-glitch/bd-air-quality-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/abed101-glitch/bd-air-quality-pipeline/actions/workflows/ci.yml)
+
 An end-to-end data engineering project: hourly air-pollution and weather data for Bangladesh's
 eight divisional cities is ingested from public APIs, validated, loaded into **PostgreSQL**,
 modelled into a **star schema with dbt** (35 data tests), orchestrated daily by **Apache Airflow**,
