@@ -1,0 +1,40 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ci
+          POSTGRES_PASSWORD: ci
+          POSTGRES_DB: bd_air
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      BDAIR_DATABASE_URL: postgresql://ci:ci@localhost:5432/bd_air
+      BDAIR_DB_USER: ci
+      BDAIR_DB_PASSWORD: ci
+      PYTHONPATH: src
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Lint
+        run: ruff check src tests dags analysis dashboard
+      - name: Unit tests
+        run: pytest -q
+      - name: Ingest one week (live API smoke test)
+        run: python -m bdair.pipeline backfill --start 2025-01-01 --end 2025-01-07
+      - name: dbt build (models + data tests)
+        working-directory: dbt
+        run: dbt build --profiles-dir .
