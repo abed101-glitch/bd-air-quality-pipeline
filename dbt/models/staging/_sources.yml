@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    loaded_at_field: loaded_at
+    freshness:
+      warn_after: {count: 36, period: hour}
+      error_after: {count: 72, period: hour}
+    tables:
+      - name: air_quality_hourly
+        description: Hourly pollutant concentrations (µg/m³) from the Open-Meteo Air Quality API (CAMS model).
+      - name: weather_hourly
+        description: Hourly weather from the Open-Meteo historical archive (ERA5). Lags real time by a few days.
+      - name: quarantine
+        description: Rows rejected by ingestion data-quality checks, with the reason.
+        freshness: null

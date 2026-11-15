@@ -1,0 +1,24 @@
+name: bd_air
+version: "1.0.0"
+config-version: 2
+profile: bd_air
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  bd_air:
+    staging:
+      +schema: staging
+      +materialized: view
+    marts:
+      +schema: marts
+      +materialized: table
+
+seeds:
+  bd_air:
+    +schema: reference

@@ -1,0 +1,12 @@
+bd_air:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('BDAIR_DB_HOST', 'localhost') }}"
+      port: "{{ env_var('BDAIR_DB_PORT', '5432') | int }}"
+      user: "{{ env_var('BDAIR_DB_USER', env_var('USER', 'postgres')) }}"
+      password: "{{ env_var('BDAIR_DB_PASSWORD', '') }}"
+      dbname: "{{ env_var('BDAIR_DB_NAME', 'bd_air') }}"
+      schema: analytics
+      threads: 4

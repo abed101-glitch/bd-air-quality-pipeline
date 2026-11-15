@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: stg_air_quality
+    tests:
+      - dbt_utils_unique_combination: {arguments: {columns: [city_id, observed_at]}}
+    columns:
+      - name: city_id
+        tests:
+          - not_null
+          - relationships: {arguments: {to: ref('cities'), field: city_id}}
+      - name: observed_at
+        tests: [not_null]
+      - name: pm2_5
+        tests:
+          - non_negative
+  - name: stg_weather
+    tests:
+      - dbt_utils_unique_combination: {arguments: {columns: [city_id, observed_at]}}
+    columns:
+      - name: city_id
+        tests: [not_null]

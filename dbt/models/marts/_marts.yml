@@ -1,0 +1,57 @@
+version: 2
+
+models:
+  - name: dim_city
+    description: The eight divisional headquarters of Bangladesh.
+    columns:
+      - name: city_id
+        tests: [unique, not_null]
+
+  - name: dim_date
+    description: Calendar dimension with Bangladesh seasons and Fri/Sat weekend.
+    columns:
+      - name: date_day
+        tests: [unique, not_null]
+      - name: season
+        tests:
+          - accepted_values: {arguments: {values: ['Winter', 'Pre-monsoon', 'Monsoon', 'Post-monsoon']}}
+
+  - name: fct_air_quality_hourly
+    description: Hourly fact table, one row per city per hour, pollutants joined to weather.
+    tests:
+      - dbt_utils_unique_combination: {arguments: {columns: [city_id, observed_at]}}
+    columns:
+      - name: city_id
+        tests:
+          - not_null
+          - relationships: {arguments: {to: ref('dim_city'), field: city_id}}
+      - name: observed_date
+        tests:
+          - relationships: {arguments: {to: ref('dim_date'), field: date_day}}
+      - name: pm2_5
+        tests: [non_negative]
+      - name: relative_humidity_pct
+        tests:
+          - between: {arguments: {min_value: 0, max_value: 100}}
+
+  - name: fct_daily_city
+    description: Daily city-level air quality with US EPA AQI (PM2.5, 24h mean) and WHO 2021 guideline flags.
+    tests:
+      - dbt_utils_unique_combination: {arguments: {columns: [city_id, date_day]}}
+    columns:
+      - name: aqi_pm25
+        tests:
+          - between: {arguments: {min_value: 0, max_value: 500}}
+      - name: aqi_category
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Good', 'Moderate', 'Unhealthy for Sensitive Groups', 'Unhealthy', 'Very Unhealthy', 'Hazardous']
+      - name: hours_observed
+        tests:
+          - between: {arguments: {min_value: 1, max_value: 25}}
+
+  - name: agg_city_monthly
+    description: Monthly city summary used by the dashboard and report.
+    tests:
+      - dbt_utils_unique_combination: {arguments: {columns: [city_id, month_start]}}

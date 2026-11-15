@@ -1,0 +1,25 @@
+{
+  "period": "2024-01-01 to 2026-11-14",
+  "complete_city_days": 8392,
+  "raw_rows_air_quality": 201408,
+  "raw_rows_weather": 201408,
+  "rows_quarantined": 0,
+  "dhaka_mean_pm25": 48.2,
+  "dhaka_times_who_annual": 9.6,
+  "dhaka_pct_days_over_who_24h": 88.0,
+  "dhaka_pct_days_unhealthy_or_worse": 36.6,
+  "dhaka_winter_vs_monsoon_ratio": 3.5,
+  "dhaka_peak_hour": 22,
+  "most_polluted_city": "Rajshahi",
+  "least_polluted_city": "Chattogram",
+  "city_ranking_pm25": {
+    "Rajshahi": 57.5,
+    "Mymensingh": 51.4,
+    "Rangpur": 51.4,
+    "Dhaka": 48.2,
+    "Khulna": 43.7,
+    "Barishal": 40.8,
+    "Sylhet": 40.7,
+    "Chattogram": 27.2
+  }
+}

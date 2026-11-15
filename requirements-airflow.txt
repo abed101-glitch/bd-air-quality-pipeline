@@ -1,0 +1,2 @@
+# Installed into a separate virtualenv (.venv-airflow) so Airflow's pins never clash with dbt's.
+apache-airflow>=3.0,<4

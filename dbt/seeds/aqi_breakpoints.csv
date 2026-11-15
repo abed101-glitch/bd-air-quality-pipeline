@@ -1,0 +1,13 @@
+pollutant,c_low,c_high,i_low,i_high,category,category_rank
+pm2_5,0.0,9.0,0,50,Good,1
+pm2_5,9.1,35.4,51,100,Moderate,2
+pm2_5,35.5,55.4,101,150,Unhealthy for Sensitive Groups,3
+pm2_5,55.5,125.4,151,200,Unhealthy,4
+pm2_5,125.5,225.4,201,300,Very Unhealthy,5
+pm2_5,225.5,325.4,301,500,Hazardous,6
+pm10,0,54,0,50,Good,1
+pm10,55,154,51,100,Moderate,2
+pm10,155,254,101,150,Unhealthy for Sensitive Groups,3
+pm10,255,354,151,200,Unhealthy,4
+pm10,355,424,201,300,Very Unhealthy,5
+pm10,425,604,301,500,Hazardous,6
